@@ -66,7 +66,7 @@ function Home() {
             </Header>
             {loading && <Loading>Loading...</Loading>}
             <Movies>
-                {data?.movies?.map(m => (
+                {data?.movies?.map((m: any) => (
                     <Movie
                         key={m.id}
                         id={m.id}
