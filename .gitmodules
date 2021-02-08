@@ -1,0 +1,6 @@
+[submodule "apollo-2020"]
+	path = apollo-2020
+	url = https://github.com/nomadcoders/apollo-2020
+[submodule "movieql"]
+	path = movieql
+	url = https://github.com/nomadcoders/movieql.git
