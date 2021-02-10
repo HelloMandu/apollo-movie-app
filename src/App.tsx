@@ -5,7 +5,7 @@ import Home from './containers/Home';
 function App() {
     return (
         <Switch>
-          <Route path={"/"} component={Home} />
+          <Route path={"/"} component={Home} exact />
           <Route path={"/:id"} component={Detail} />
         </Switch>
     );

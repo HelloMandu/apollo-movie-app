@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { gql } from "apollo-boost";
-import { useMutation } from "@apollo/client";
+// import { useMutation } from "@apollo/client";
 
-const LIKE_MOVIE = gql`
-  mutation toggleLikeMovie($id: Int!, $isLiked: Boolean!) {
-    toggleLikeMovie(id: $id, isLiked: $isLiked) @client
-  }
-`;
+// const LIKE_MOVIE = gql`
+//   mutation toggleLikeMovie($id: Int!, $isLiked: Boolean!) {
+//     toggleLikeMovie(id: $id, isLiked: $isLiked) @client
+//   }
+// `;
 
 const Container = styled.div`
   height: 400px;

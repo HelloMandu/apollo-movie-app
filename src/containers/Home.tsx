@@ -57,7 +57,6 @@ const Movies = styled.div`
 
 function Home() {
     const { loading, error, data } = useQuery(GET_MOVIES);
-    console.log(loading, error, data);
     return (
         <Container>
             <Header>
