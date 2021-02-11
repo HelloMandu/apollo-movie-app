@@ -8,6 +8,7 @@ const GET_MOVIES = gql`
         movies {
             id
             medium_cover_image
+            isLiked @client
         }
     }
 `;
@@ -56,7 +57,7 @@ const Movies = styled.div`
 `;
 
 function Home() {
-    const { loading, error, data } = useQuery(GET_MOVIES);
+    const { loading, data } = useQuery(GET_MOVIES);
     return (
         <Container>
             <Header>

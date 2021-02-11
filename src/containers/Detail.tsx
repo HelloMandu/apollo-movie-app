@@ -48,11 +48,13 @@ const Poster = styled.div`
 const GET_MOVIE = gql`
     query getMovie($id: Int!) {
         movie(id: $id) {
+            id
             title
             medium_cover_image
             language
             rating
             description_intro
+            isLiked @client
         }
         suggestions(id: $id) {
           id
@@ -67,11 +69,9 @@ interface MatchParams {
 
 function Detail({ match }: RouteComponentProps<MatchParams>) {
     const id = parseInt(match.params.id);
-    console.log(id);
     const { loading, data } = useQuery(GET_MOVIE, {
         variables: { id },
     });
-    console.log(data);
     return (
         <Container>
             <Column>
