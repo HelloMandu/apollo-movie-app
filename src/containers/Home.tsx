@@ -12,6 +12,32 @@ const GET_MOVIES = gql`
         }
     }
 `;
+
+function Home() {
+    const { loading, data } = useQuery(GET_MOVIES);
+    return (
+        <Container>
+            <Header>
+                <Title>Movie App</Title>
+                <Subtitle>GraphQL Practice</Subtitle>
+            </Header>
+            {loading && <Loading>Loading...</Loading>}
+            <Movies>
+                {data?.movies?.map((m: any) => (
+                    <Movie
+                        key={m.id}
+                        id={m.id}
+                        isLiked={m.isLiked}
+                        bg={m.medium_cover_image}
+                    />
+                ))}
+            </Movies>
+        </Container>
+    );
+}
+
+export default Home;
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -56,27 +82,3 @@ const Movies = styled.div`
     top: -50px;
 `;
 
-function Home() {
-    const { loading, data } = useQuery(GET_MOVIES);
-    return (
-        <Container>
-            <Header>
-                <Title>Movie App</Title>
-                <Subtitle>GraphQL Practice</Subtitle>
-            </Header>
-            {loading && <Loading>Loading...</Loading>}
-            <Movies>
-                {data?.movies?.map((m: any) => (
-                    <Movie
-                        key={m.id}
-                        id={m.id}
-                        isLiked={m.isLiked}
-                        bg={m.medium_cover_image}
-                    />
-                ))}
-            </Movies>
-        </Container>
-    );
-}
-
-export default Home;

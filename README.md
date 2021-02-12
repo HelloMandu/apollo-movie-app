@@ -1,46 +1,76 @@
-# Getting Started with Create React App
+<h1 align="center">Movie App with GraphQL</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## API
+ - movie: https://yts.mx/api/v2
+ 
+## Tech
+ - GraphQL
+ - Apollo
+ - React-Hooks
+ - styled-component
+ - React-Router
+ 
+## Screen Shots
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/45222982/107736416-5b7cab00-6d45-11eb-92b2-859a806a993b.png" width="600" height="350"/> 
+</p>
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/45222982/107736420-5c154180-6d45-11eb-95f3-d8e1bf4f0d34.png" width="600" height="350"/> 
+</p>
 
-## Available Scripts
+## Explain
+ - movieapi를 이용해 graphql 서버를 생성
+ - query, mutation을 이용해 api요청, local state를 이용해 data 수정
 
-In the project directory, you can run:
+### Source
 
-### `yarn start`
+## fetch data
+```ts
+//query
+const GET_MOVIE = gql`
+    query getMovie($id: Int!) {
+        movie(id: $id) {
+            id
+            title
+            medium_cover_image
+            language
+            rating
+            description_intro
+            isLiked @client
+        }
+        suggestions(id: $id) {
+          id
+          medium_cover_image
+        }
+    }
+`;
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+//mutaion, local state
+const LIKE_MOVIE = gql`
+  mutation toggleLikeMovie($id: Int!, $isLiked: Boolean!) {
+    toggleLikeMovie(id: $id) @client
+  }
+`;
+```
+## apollo client
+```
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/',
+  cache: new InMemoryCache(),
+  resolvers: {
+    Movie: {
+      isLiked: () => false
+    },
+    Mutation: {
+      toggleLikeMovie: (_, { id }, { cache }) => {
+        cache.modify({
+          id: `Movie:${id}`,
+          fields: {
+            isLiked: (isLiked: boolean) => !isLiked
+          },
+        });
+      }
+    }
+  }
+});
+```
